@@ -31,7 +31,7 @@ function CheckIfEventOverlaps(event1, event2) {
  * 
  * @return {list} Objects in the event list that overlap with eventToCheck.
  */
-function CheckIfEventsOverlap(eventToCheck, eventList) {
+function GetOverlappingEvents(eventToCheck, eventList) {
     let overlaps = [];
     for(let i = 0; i < eventList.length; i++) {
         if (CheckIfEventOverlaps(eventToCheck, eventList[i])) {

@@ -31,7 +31,7 @@ export function GetOverlappingEvents(eventToCheck: any, eventList: any[]): any[]
     let overlaps = [];
     for(let i = 0; i < eventList.length; i++) {
         if (CheckIfEventOverlaps(eventToCheck, eventList[i])) {
-            console.log("Found conflicting event.");
+            console.log("Found conflicting event:", eventList[i]);
             overlaps.push(eventList[i]);
         }
     }

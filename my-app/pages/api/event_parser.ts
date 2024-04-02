@@ -34,7 +34,7 @@ export function MergeTwoEvents(event1: any, event2: any): any {
     const otherMsEnd = Date.parse(event2.end_time);
 
     let newStart = "";
-    if (msStart < otherMsEnd) {
+    if (msStart < otherMsStart) {
         newStart = event1.start_time;
     }
     else newStart = event2.start_time;
@@ -68,7 +68,7 @@ export function MergeEvents(eventList: any[]): any[] {
         }
         else mergedEvents.push(sortedEvents[i]);
     }
-
+    console.log("Merged events", mergedEvents);
     return mergedEvents;
 }
 

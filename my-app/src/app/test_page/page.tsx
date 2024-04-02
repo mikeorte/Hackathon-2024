@@ -1,6 +1,6 @@
 'use client'
 
-import { GetOverlappingEvents } from "../../../pages/api/event_parser"
+import { GetOverlappingEvents, MergeEvents } from "../../../pages/api/event_parser"
 
 export default function TestPage() {
 
@@ -25,7 +25,7 @@ export default function TestPage() {
     };
 
     const testEvent4 = {
-        start_time: "2024-07-29T9:59:00Z",
+        start_time: "2024-07-29T09:59:00Z",
         end_time: "2024-07-29T15:00:00Z"
     };
 
@@ -36,6 +36,7 @@ export default function TestPage() {
     testEvents.push(testEvent4);
 
     const handleClick = () => {
+        MergeEvents(testEvents);
         var events = GetOverlappingEvents(testEvent1, testEvents);
         console.log(events);
     }

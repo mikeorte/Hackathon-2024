@@ -98,8 +98,45 @@ export function GetOverlappingEvents(eventToCheck: any, eventList: any[]): any[]
     return overlaps;
 }
 
-export function GetSoonestPossibleMeeting(meetingDuration: number, eventList: any[]): any {
+/**
+ * Gets the date in miliseconds, ignoring hours, minutes, and seconds.
+ * @param time A date in a Date parsable format.
+ */
+function GetDateInMiliseconds(time: string): number {
+    let left, right = time.split("T", 2);
+    let newDate = left + "T:00:00:00";
+    return Date.parse(newDate);
+}
+
+/**
+ * Gets the weekday name given a date. ["sun", "mon", "tue", "wed", "thu", "fri", "sat"].
+ * @param time The date in a Date parseable string.
+ * @returns The shortened day in lowercase.
+ */
+function GetWeekdayName(time: string): string {
+    return new Date(time).toDateString().split(" ")[0].toLowerCase();
+}
+
+/**
+ * Gets the soonest possible meeting time given a target meeting duration. The meeting time will fall between 
+ * the given start hour and end hour.
+ * This function starts at the beggining of the week for demonstration purposes.
+ * @param meetingDuration How long the meeting should be.
+ * @param eventList The list of events that may interfere with the meeting.
+ * @param startHour The earliest the meeting can start.
+ * @param endHour The latest the meeting can end.
+ * @param weekDays The possible days the meeting can take place. 'mon', 'tue', etc... Must be lowercase and must be truncated to 3 letters.
+ */
+export function GetSoonestPossibleMeeting(meetingDuration: number, eventList: any[], startHour: number, endHour: number,
+    weekDays: string[]): any {
+    let durationMilisec = meetingDuration * 3600000;
+    let currentTime = Date.parse("2024-04-01T01:00:00Z");
+    
     for(let i = 0; i < eventList.length; i++) {
+        let startMilisec = GetDateInMiliseconds(eventList[i].start_time);
+        startMilisec += startHour * 3600000;
+        let endMilisec = startMilisec + (endHour - startHour) * 3600000;
+        
         
     }
 }

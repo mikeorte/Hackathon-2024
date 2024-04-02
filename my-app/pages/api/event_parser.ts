@@ -33,12 +33,14 @@ export function MergeTwoEvents(event1: any, event2: any): any {
     const otherMsStart = Date.parse(event2.start_time);
     const otherMsEnd = Date.parse(event2.end_time);
 
+    // Sets the new start time to the earliest of the given events.
     let newStart = "";
     if (msStart < otherMsStart) {
         newStart = event1.start_time;
     }
     else newStart = event2.start_time;
 
+    // Sets the new stop time the the latest of the given events.
     let newEnd = "";
     if (msEnd < otherMsEnd) {
         newEnd = event2.end_time;
@@ -58,11 +60,15 @@ export function MergeTwoEvents(event1: any, event2: any): any {
 export function MergeEvents(eventList: any[]): any[] {
     let mergedEvents: any[] = [];
     if (eventList.length === 0) return [];
+    // Sorts the events to make the merging process easier.
     const sortedEvents = eventList.toSorted((a, b) => Date.parse(a.start_time) - Date.parse(b.start_time));
-    console.log("Sort events", sortedEvents);
+    console.log("Sorted events", sortedEvents);
+
     mergedEvents.push(sortedEvents[0]);
 
     for(let i = 1; i < sortedEvents.length; i++) {
+        // If the current event overlaps with the last event in the merged events list 
+        // it combines them.
         if (CheckIfEventOverlaps(mergedEvents[mergedEvents.length - 1], sortedEvents[i])) {
             mergedEvents[mergedEvents.length - 1] = MergeTwoEvents(mergedEvents[mergedEvents.length - 1], sortedEvents[i]);
         }

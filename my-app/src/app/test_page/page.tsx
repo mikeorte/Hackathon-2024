@@ -1,6 +1,6 @@
 'use client'
 
-import { GetOverlappingEvents, MergeEvents } from "../../../pages/api/event_parser"
+import { GetOverlappingEvents, MergeEvents, GetSoonestPossibleMeeting } from "../../../pages/api/event_parser"
 
 export default function TestPage() {
 
@@ -35,10 +35,13 @@ export default function TestPage() {
     testEvents.push(testEvent3);
     //testEvents.push(testEvent4);
 
+    const weekdays: string[] = ["mon", "tue", "wed", "thu", "fri"];
+
     const handleClick = () => {
         MergeEvents(testEvents);
         var events = GetOverlappingEvents(testEvent1, testEvents);
         console.log(events);
+        console.log(GetSoonestPossibleMeeting(5, testEvents, 8, 18, weekdays));
     }
 
     return (

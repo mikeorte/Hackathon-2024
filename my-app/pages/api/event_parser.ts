@@ -90,11 +90,12 @@ export function MergeEvents(eventList: any[]): any[] {
  * @return {list} Objects in the event list that overlap with eventToCheck.
  */
 export function GetOverlappingEvents(eventToCheck: any, eventList: any[]): any[] {
+    const sortedEventList = eventList.toSorted((a, b) => Date.parse(a.start_time) - Date.parse(b.start_time));
     let overlaps = [];
-    for(let i = 0; i < eventList.length; i++) {
-        if (CheckIfEventOverlaps(eventToCheck, eventList[i])) {
-            console.log("Found conflicting event:", eventList[i]);
-            overlaps.push(eventList[i]);
+    for(let i = 0; i < sortedEventList.length; i++) {
+        if (CheckIfEventOverlaps(eventToCheck, sortedEventList[i])) {
+            console.log("Found conflicting event:", sortedEventList[i]);
+            overlaps.push(sortedEventList[i]);
         }
     }
     return overlaps;
@@ -107,6 +108,12 @@ export function GetOverlappingEvents(eventToCheck: any, eventList: any[]): any[]
 function GetDateInMiliseconds(time: string): number {
     let times = time.split("T", 2);
     let newDate = times[0] + "T00:00:00";
+    let date = new Date(time);
+    let dateMS = date.getTime();
+    dateMS -= date.getHours() * 3600000;
+    dateMS -= date.getMinutes() * 60000;
+    dateMS -= date.getSeconds() * 1000;
+    return dateMS;
     return Date.parse(newDate);
 }
 
@@ -132,19 +139,20 @@ function GetWeekdayName(time: string): string {
 export function GetSoonestPossibleMeeting(meetingDuration: number, eventList: any[], startHour: number, endHour: number,
     weekDays: string[]): any {
     let durationMilisec = meetingDuration * 3600000;
-    let currentTime = new Date("2024-04-01T01:00:00Z");
+    let currentTime = new Date("2024-04-01T01:00:00");
 
     const mergedEvents = MergeEvents(eventList);
     
     let dayIncrement = 0;
     let possibleMeetingDay = new Date(currentTime.getTime());
+    console.log(mergedEvents);
     while(dayIncrement < 10) {
         //console.log(possibleMeetingDay);
         possibleMeetingDay = new Date(GetDateInMiliseconds(currentTime.toISOString()) + dayIncrement * 86400000);
-        //console.log(possibleMeetingDay);
+        console.log(possibleMeetingDay);
         if (weekDays.includes(GetWeekdayName(possibleMeetingDay.toISOString()))) {
-            let result = GetSoonestPossibleMeetingAtDay(durationMilisec, mergedEvents, startHour, endHour, currentTime.toISOString(), possibleMeetingDay.toString());
-            
+            console.log("Possible day.");
+            let result = GetSoonestPossibleMeetingAtDay(durationMilisec, mergedEvents, startHour, endHour, currentTime.toISOString(), possibleMeetingDay.toISOString());
             if (result != undefined) {
                 return result;
             }
@@ -167,22 +175,28 @@ export function GetSoonestPossibleMeeting(meetingDuration: number, eventList: an
 function GetSoonestPossibleMeetingAtDay(meetingDurationMS: number, eventlist: any[], startHour: number, endHour: number, currentTime: string, dayToCheck: string): any {
     let dayStartMS = GetDateInMiliseconds(dayToCheck);
     let startDT = new Date(currentTime);
+    console.log("Start Time");
+    console.log(new Date(dayStartMS));
     if (startDT.getTime() < dayStartMS + startHour * 3600000) startDT.setTime(dayStartMS + startHour * 3600000);
 
     let endDT = new Date(startDT);
     endDT.setTime(startDT.getTime() + meetingDurationMS);
-    if (endDT.getTime() < endHour * 3600000) return undefined;
 
-    while(endDT.getTime() < endHour * 3600000) {
+    console.log(startDT, endDT);
+    if (endDT.getTime() > dayStartMS + endHour * 3600000) return undefined;
+
+    while(endDT.getTime() < dayStartMS + endHour * 3600000) {
         let eventAttempt = {start_time: startDT.toISOString(), end_time: endDT.toISOString()};
         let overlaps = GetOverlappingEvents(eventAttempt, eventlist);
+        console.log("Attempt vs overlaps", eventAttempt, overlaps);
 
         if (overlaps.length === 0) {
             return eventAttempt;
         }
         else {
-            startDT.setTime(overlaps[overlaps.length - 1].getTime());
+            startDT.setTime(new Date(overlaps[overlaps.length - 1]).getTime());
             endDT.setTime(startDT.getTime() + meetingDurationMS);
+            console.log("New Start and End Time: ", startDT, endDT);
         }
     }
 

@@ -2,7 +2,14 @@ import { ConvertToEventListWithBlockedAttributes } from "./event_parser";
 
 const CalendarViewDay = (props: any) => {
     const day: string = props.day;
-    const events_with_gap_info: any[] = ConvertToEventListWithBlockedAttributes(props.events);
+    let result = ConvertToEventListWithBlockedAttributes(props.events);
+    if (result === undefined) {
+        return (
+            <div className="calendar-day-container flex flex-col">
+            </div>
+        )
+    }
+    const events_with_gap_info: any[] = result;
 
     return (
         <div className="calendar-day-container flex flex-col">

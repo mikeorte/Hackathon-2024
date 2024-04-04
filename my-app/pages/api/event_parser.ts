@@ -247,3 +247,43 @@ export function GetDistinctDates(eventList: any[]): string[] {
 
     return dates;
 }
+
+export function ConvertToEventListWithBlockedAttributes(eventList: any[]) {
+    const mergedEvents = MergeEvents(eventList);
+    const newEventList: any[] = [];
+
+    for(let i = 0; i < mergedEvents.length; i++) {
+        let unblockedEvent = {
+            start_time: "",
+            end_time: "",
+            blocked: false
+        };
+        let blockedEvent = {
+            start_time: mergedEvents[i].start_time,
+            end_time: mergedEvents[i].end_time,
+            blocked: true
+        };
+
+        if (i === 0) {
+            unblockedEvent.start_time = new Date(GetDateInMiliseconds(blockedEvent.start_time)).toISOString();
+            unblockedEvent.end_time = new Date(blockedEvent.start_time).toISOString();
+            newEventList.push(unblockedEvent);
+            newEventList.push(blockedEvent);
+        }
+        else if (i === mergedEvents.length - 1) {
+            newEventList.push(blockedEvent);
+            unblockedEvent.start_time = new Date(blockedEvent.end_time).toISOString();
+            unblockedEvent.end_time = new Date(GetDateInMiliseconds(blockedEvent.start_time) + 86399999).toISOString();
+            newEventList.push(unblockedEvent);
+        }
+        else {
+            newEventList.push(blockedEvent);
+            unblockedEvent.start_time = new Date(mergedEvents[i+1].end_time).toISOString();
+            unblockedEvent.end_time = new Date(mergedEvents[i+1].end_time).toISOString();
+            newEventList.push(unblockedEvent);
+        }
+
+    }
+
+    return newEventList;
+}

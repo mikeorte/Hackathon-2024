@@ -6,7 +6,7 @@ const CalendarView = (props: any) => {
     const distinctDates = GetDistinctDates(props.events);
 
     return (
-        <div className="flex text-zinc-200 bg-slate-400">
+        <div className="flex calendar">
             {distinctDates.map((date) => (
                 <CalendarViewDay day={new Date(date).toDateString()} events={FilterEventsOnDay(props.events, date)} />
             ))}

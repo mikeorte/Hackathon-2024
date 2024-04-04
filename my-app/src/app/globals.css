@@ -31,3 +31,23 @@
     text-wrap: balance;
   }
 }
+
+.calendar {
+  background-color:aquamarine;
+}
+
+.blocked-event {
+  background-color:crimson;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.unblocked-event {
+  background-color:green;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}

@@ -13,8 +13,8 @@ export function CheckIfEventOverlaps(event1: any, event2: any): boolean {
     const otherMsStart = Date.parse(event2.start_time);
     const otherMsEnd = Date.parse(event2.end_time);
     //console.log(msStart, msEnd, otherMsStart, otherMsEnd);
-    if (msStart >= otherMsEnd) return false;
-    else if (msEnd <= otherMsStart) return false;
+    if (msStart > otherMsEnd) return false;
+    else if (msEnd < otherMsStart) return false;
     else return true;
 }
 
@@ -72,7 +72,7 @@ export function MergeEvents(eventList: any[]): any[] {
         // If the current event overlaps with the last event in the merged events list 
         // it combines them.
         if (CheckIfEventOverlaps(mergedEvents[mergedEvents.length - 1], sortedEvents[i])) {
-            mergedEvents[mergedEvents.length - 1] = MergeTwoEvents(mergedEvents[mergedEvents.length - 1], sortedEvents[i]);
+            mergedEvents.push(MergeTwoEvents(mergedEvents.pop(), sortedEvents[i]));
         }
         else mergedEvents.push(sortedEvents[i]);
     }
@@ -286,8 +286,11 @@ export function ConvertToEventListWithBlockedAttributes(eventList: any[]) {
             blocked: true
         };
 
-        unblockedEvent.start_time = new Date(mergedEvents[i-1].end_time).toISOString();
-        unblockedEvent.end_time = new Date(mergedEvents[i].start_time).toISOString();
+        unblockedEvent = {
+            start_time: new Date(mergedEvents[i-1].end_time).toISOString(),
+            end_time: new Date(mergedEvents[i].start_time).toISOString(),
+            blocked: false
+        };
         newEventList.push(unblockedEvent);
         newEventList.push(blockedEvent);
 

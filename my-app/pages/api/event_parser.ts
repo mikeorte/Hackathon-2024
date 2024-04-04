@@ -248,42 +248,60 @@ export function GetDistinctDates(eventList: any[]): string[] {
     return dates;
 }
 
+/**
+ * Creates a new list where all available space is filled with events. The existing events 
+ * get a new attribute names "blocked" where it's value is set to true. 
+ * The events that are added have that value marked false.
+ * @param eventList 
+ * @returns 
+ */
 export function ConvertToEventListWithBlockedAttributes(eventList: any[]) {
     const mergedEvents = MergeEvents(eventList);
     const newEventList: any[] = [];
 
-    for(let i = 0; i < mergedEvents.length; i++) {
-        let unblockedEvent = {
-            start_time: "",
-            end_time: "",
-            blocked: false
-        };
-        let blockedEvent = {
+    if (eventList.length === 0) {
+        return undefined;
+    }
+
+    let unblockedEvent = {
+        start_time: "",
+        end_time: "",
+        blocked: false
+    };
+    let blockedEvent = {
+        start_time: mergedEvents[0].start_time,
+        end_time: mergedEvents[0].end_time,
+        blocked: true
+    };
+
+    unblockedEvent.start_time = new Date(GetDateInMiliseconds(blockedEvent.start_time)).toISOString();
+    unblockedEvent.end_time = new Date(blockedEvent.start_time).toISOString();
+    newEventList.push(unblockedEvent);
+    newEventList.push(blockedEvent);
+
+    for(let i = 1; i < mergedEvents.length; i++) {
+        blockedEvent = {
             start_time: mergedEvents[i].start_time,
             end_time: mergedEvents[i].end_time,
             blocked: true
         };
 
-        if (i === 0) {
-            unblockedEvent.start_time = new Date(GetDateInMiliseconds(blockedEvent.start_time)).toISOString();
-            unblockedEvent.end_time = new Date(blockedEvent.start_time).toISOString();
-            newEventList.push(unblockedEvent);
-            newEventList.push(blockedEvent);
-        }
-        else if (i === mergedEvents.length - 1) {
-            newEventList.push(blockedEvent);
-            unblockedEvent.start_time = new Date(blockedEvent.end_time).toISOString();
-            unblockedEvent.end_time = new Date(GetDateInMiliseconds(blockedEvent.start_time) + 86399999).toISOString();
-            newEventList.push(unblockedEvent);
-        }
-        else {
-            newEventList.push(blockedEvent);
-            unblockedEvent.start_time = new Date(mergedEvents[i+1].end_time).toISOString();
-            unblockedEvent.end_time = new Date(mergedEvents[i+1].end_time).toISOString();
-            newEventList.push(unblockedEvent);
-        }
+        unblockedEvent.start_time = new Date(mergedEvents[i-1].end_time).toISOString();
+        unblockedEvent.end_time = new Date(mergedEvents[i].start_time).toISOString();
+        newEventList.push(unblockedEvent);
+        newEventList.push(blockedEvent);
 
     }
+    
+    unblockedEvent = {
+        start_time: "",
+        end_time: "",
+        blocked: false
+    };
+
+    unblockedEvent.start_time = new Date(mergedEvents[mergedEvents.length - 1].end_time).toISOString();
+    unblockedEvent.end_time = new Date(GetDateInMiliseconds(mergedEvents[0].start_time) + 86399999).toISOString();
+    newEventList.push(unblockedEvent);
 
     return newEventList;
 }

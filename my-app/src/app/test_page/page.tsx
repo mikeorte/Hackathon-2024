@@ -26,8 +26,23 @@ export default function TestPage() {
     };
 
     const testEvent4 = {
-        start_time: new Date("2024-04-01T08:59:00").toISOString(),
-        end_time: new Date("2024-04-01T13:00:00").toISOString()
+        start_time: new Date("2024-04-02T08:59:00").toISOString(),
+        end_time: new Date("2024-04-02T10:00:00").toISOString()
+    };
+
+    const testEvent5 = {
+        start_time: new Date("2024-04-02T13:00:00").toISOString(),
+        end_time: new Date("2024-04-02T14:00:00").toISOString()
+    };
+
+    const testEvent6 = {
+        start_time: new Date("2024-04-02T11:00:00").toISOString(),
+        end_time: new Date("2024-04-02T12:00:01").toISOString()
+    };
+
+    const testEvent7 = {
+        start_time: new Date("2024-04-02T15:59:00").toISOString(),
+        end_time: new Date("2024-04-02T18:00:00").toISOString()
     };
 
     const testEvents: any[] = [];
@@ -35,6 +50,9 @@ export default function TestPage() {
     testEvents.push(testEvent2);
     testEvents.push(testEvent3);
     testEvents.push(testEvent4);
+    testEvents.push(testEvent5);
+    testEvents.push(testEvent6);
+    testEvents.push(testEvent7);
 
     const weekdays: string[] = ["mon", "tue", "wed", "thu", "fri"];
 

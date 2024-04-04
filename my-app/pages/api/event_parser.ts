@@ -202,3 +202,48 @@ function GetSoonestPossibleMeetingAtDay(meetingDurationMS: number, eventlist: an
 
     return undefined;
 }
+
+/**
+ * Filters events that don't start on the given day.
+ * @param eventList List of events to filter through.
+ * @param dayToCheck A date to check.
+ * @returns List of events that start on the given date.
+ */
+export function FilterEventsOnDay(eventList: any[], dayToCheck: string): any[] {
+    let dayStart = new Date(GetDateInMiliseconds(dayToCheck));
+    let dayEnd = new Date(dayStart.getTime() + 86400000);
+    let event = {
+        start_time: dayStart.toISOString(),
+        end_time: dayEnd.toISOString()
+    };
+
+    return GetOverlappingEvents(event, eventList);
+}
+
+/**
+ * Gets a list of all the distinct dates events take place on.
+ * @param eventList List of events to check.
+ * @returns 
+ */
+export function GetDistinctDates(eventList: any[]): string[] {
+    if (eventList.length === 0) return [];
+    let mergedEvents = MergeEvents(eventList);
+    const dates: string[] = [];
+    
+    for (let i = 0; i < mergedEvents.length; i++) {
+        let dayStart = new Date(GetDateInMiliseconds(mergedEvents[i].start_time));
+        let dayEnd = new Date(dayStart.getTime() + 86400000);
+        let event = {
+            start_time: dayStart.toISOString(),
+            end_time: dayEnd.toISOString()
+        };
+
+        if (CheckIfEventOverlaps(event, mergedEvents)) {
+            if (!dates.includes(event.start_time)) {
+                dates.push(event.start_time);
+            }
+        }
+    }
+
+    return dates;
+}

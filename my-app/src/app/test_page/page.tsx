@@ -1,5 +1,6 @@
 'use client'
 
+import CalendarView from "../../../pages/api/calendar_view";
 import { GetOverlappingEvents, MergeEvents, GetSoonestPossibleMeeting } from "../../../pages/api/event_parser"
 
 export default function TestPage() {
@@ -51,6 +52,7 @@ export default function TestPage() {
             <button onClick={handleClick}>
                 Button for Testing
             </button>
+            <CalendarView events={testEvents}/>
         </div>
     )
 }

@@ -17,10 +17,10 @@ function MiniSummary (props: any) {
 
     return (
         <div>
-        <div id="DateDisplay" className=" inline rounded-md p-2 ml-4 px-3">
+        <div id="DateDisplay" className=" inline rounded-md p-2 ml-4 px-3 outlook-shadow bg-blue-accent">
             {subject} | {day}
         </div>
-        <div id="Summary-Body" className={" m-4 px-8 py-4 shadow-lg rounded-md text-lg"}>
+        <div id="Summary-Body" className={" m-4 px-8 py-4 rounded-md text-lg outlook-shadow bg-light-accent"}>
             {text}
         </div>
         </div>

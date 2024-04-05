@@ -31,19 +31,23 @@ body {
   }
 }
 
-#Header {
+.outlook-shadow {
+  box-shadow: 0px 2.5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.bg-background {
   background-color: rgb(20, 20, 20);
 }
 
-#DateDisplay {
+.bg-blue-accent {
   background-color: rgb(19, 45, 73);
 }
 
-#DateDisplay:hover {
+.bg-blue-accent:hover {
   background-color: rgb(25, 59, 95);
 }
 
-#Summary-Body {
+.bg-light-accent {
   background-color: rgb(41, 41, 41);
 }
 

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Summary from "../../pages/api/summary/page";
 
 function EmailBox(props: any) {
   let sender = props.sender;
@@ -60,6 +61,7 @@ export default function Home() {
           <EmailBox sender={email.sender} timestamp={email.timestamp} subject={email.subject} />
         ))}
       </div>
+      <Summary />
     </main>
   );
 }

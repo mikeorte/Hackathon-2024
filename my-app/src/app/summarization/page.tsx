@@ -1,3 +1,8 @@
+/**
+ * Turns a summary object into a visual element.
+ * @param props Must have "text", "day" and "subject" attributes. They should all be strings.
+ * @returns 
+ */
 function MiniSummary (props: any) {
     let text = props.text;
     let day = props.day;
@@ -27,8 +32,14 @@ function MiniSummary (props: any) {
     )
 }
 
-
-
+/**
+ * This page is used to display a list of summaries. Any missing properties 
+ * will be filled with placeholder text.
+ * @param props 
+ * Requires a "summaries" attribute. It should be a list of objects. Each object 
+ * needs a "text" property, "day" property, and "subject" property. They should be strings.
+ * @returns 
+ */
 const Summary = (props: any) => {
     let summaries = props.summaries;
     if (summaries === undefined) {

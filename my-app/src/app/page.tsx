@@ -24,7 +24,7 @@ function EmailBox(props: any) {
 }
 
 
-export default function Home(props: any) {
+export default function Inbox(props: any) {
   let emails: any[] = props.emails;
 
   if (emails === undefined || emails.length === 0) {

@@ -32,7 +32,7 @@ function MiniSummary (props: any) {
 const Summary = (props: any) => {
     let summaries = props.summaries;
     if (summaries === undefined) {
-        summaries = [ {} ]
+        summaries = [ {}, {}, {} ]
     }
 
     return (
@@ -43,7 +43,6 @@ const Summary = (props: any) => {
         {summaries.map((summary: any) => (
             <MiniSummary text={summary.text} day={summary.day} subject={summary.subject}/>
         ))}
-        <MiniSummary text={props.text} day={props.day} subject={props.subject}/>
     </main>
     )
 };

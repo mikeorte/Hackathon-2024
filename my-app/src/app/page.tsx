@@ -24,10 +24,10 @@ function EmailBox(props: any) {
 }
 
 
-export default function Home() {
-  let emails: any[] = [];
+export default function Home(props: any) {
+  let emails: any[] = props.emails;
 
-  if (emails.length === 0) {
+  if (emails === undefined || emails.length === 0) {
     emails = [{
       sender: "placeholder@sender.com",
       recipient: "placeholder@recipient.com",
@@ -61,7 +61,6 @@ export default function Home() {
           <EmailBox sender={email.sender} timestamp={email.timestamp} subject={email.subject} />
         ))}
       </div>
-      <Summary />
     </main>
   );
 }

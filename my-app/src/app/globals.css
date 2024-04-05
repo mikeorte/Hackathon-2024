@@ -4,30 +4,70 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-start-rgb: 20, 20, 20
+  --background-end-rgb: 20, 20, 20
 }
 
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
   }
-}
+}*/
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: rgb(255, 255, 255);
+  background-color: rgb(20, 20, 20);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.outlook-shadow {
+  box-shadow: 0px 2.5px 5px rgba(0, 0, 0, 0.25);
+}
+
+.bg-background {
+  background-color: rgb(20, 20, 20);
+}
+
+.bg-blue-accent {
+  background-color: rgb(19, 45, 73);
+}
+
+.bg-blue-accent:hover {
+  background-color: rgb(25, 59, 95);
+}
+
+.bg-light-accent {
+  background-color: rgb(41, 41, 41);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(20, 20, 20);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(133, 133, 133);
+  border-radius: 3px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(173, 173, 173);
 }

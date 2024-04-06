@@ -1,8 +1,7 @@
-# Hackathon-2024
-
+# Hackathon 2024
 ## Description
 
-[Provide a brief description of your project here]
+This application generates a summary of emails you have recieved, either from today or the entire week.
 
 ## Table of Contents
 
@@ -56,9 +55,9 @@ Once the installation is complete, you can proceed to the [Usage](#usage) sectio
 
 We would like to acknowledge the following contributors for their valuable contributions to this project:
 
-- [Contributor 1](https://github.com/contributor1)
-- [Contributor 2](https://github.com/contributor2)
-- [Contributor 3](https://github.com/contributor3)
-- [Contributor 4](https://github.com/contributor4)
+- [Michael Ortega](https://github.com/mikeorte)
+- [Jacob McCormack](https://github.com/jcub1011)
+- [Sebastian Huamani](https://github.com/sebastiannoliv1)
+- [Andrea Safadi](https://github.com/safadiandrea)
 
 Thank you for your contributions!

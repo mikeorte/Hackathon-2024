@@ -9,14 +9,14 @@ function EmailBox(props: any) {
   let body = props.body;
 
   return (
-    <div className="bg-light-accent-hoverable px-3 mb-3 py-2 rounded w-80 overflow-clip outlook-shadow">
+    <div className="bg-light-accent-hoverable email-nugget outlook-shadow">
       <div>
         {sender}
       </div>
-      <div className="pl-4">
+      <div className="email-nugget-indent">
         {subject}
       </div>
-      <div className="pl-4 text-grey">
+      <div className="email-nugget-indent text-grey">
         {new Date(timestamp).toDateString()}
       </div>
     </div>
@@ -50,11 +50,11 @@ export default function Inbox(props: any) {
   }
 
   return (
-    <main className="mx-0">
-      <div className="py-2 my-3 pl-4 bg-light-accent rounded outlook-shadow flex flex-row">
+    <main className="">
+      <div className="inbox-header bg-light-accent outlook-shadow">
         <div className="font-bold">Inbox</div>
-        <button id="todayBttn" className="summary-buttons rounded mx-5 px-2">Summarize Today's Emails</button>
-        <button id="weekBttn" className="summary-buttons rounded px-2 justify-self-end">Summarize This Week's Emails</button>
+        <button id="todayBttn" className="summary-buttons">Summarize Today's Emails</button>
+        <button id="weekBttn" className="summary-buttons">Summarize This Week's Emails</button>
       </div>
       <div id="EmailList">
         {emails.map((email) => (

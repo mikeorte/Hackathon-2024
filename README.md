@@ -6,7 +6,6 @@ This application generates a summary of emails you have recieved, either from to
 ## Table of Contents
 
 - [Installation](#installation)
-- [Usage](#usage)
 - [Contributors](#contributors)
 
 ## Installation
@@ -46,10 +45,6 @@ To install the project, follow these steps:
    ```
 
 Once the installation is complete, you can proceed to the [Usage](#usage) section for instructions on how to use the project.
-
-## Usage
-
-[Provide instructions on how to use your project here]
 
 ## Contributors
 

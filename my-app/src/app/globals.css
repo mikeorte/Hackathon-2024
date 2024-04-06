@@ -151,3 +151,7 @@ body {
 .email-nugget-indent {
   padding-left: 1rem/* 16px */;
 }
+
+.inbox-name {
+  font-weight: 700;
+}

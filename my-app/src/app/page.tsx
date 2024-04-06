@@ -52,7 +52,7 @@ export default function Inbox(props: any) {
   return (
     <main className="">
       <div className="inbox-header bg-light-accent outlook-shadow">
-        <div className="font-bold">Inbox</div>
+        <div className="inbox-name">Inbox</div>
         <button id="todayBttn" className="summary-buttons">Summarize Today's Emails</button>
         <button id="weekBttn" className="summary-buttons">Summarize This Week's Emails</button>
       </div>

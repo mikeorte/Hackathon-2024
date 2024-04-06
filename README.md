@@ -44,7 +44,7 @@ To install the project, follow these steps:
    npm run build
    ```
 
-Once the installation is complete, you can proceed to the [Usage](#usage) section for instructions on how to use the project.
+Once the installation is complete, you can proceed to run ```npm run dev```.
 
 ## Contributors
 

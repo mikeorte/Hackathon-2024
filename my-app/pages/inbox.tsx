@@ -1,5 +1,7 @@
+import React from "react";
 import { GetServerSideProps } from "next";
 import { fetchAllEmails } from "../lib/dbUtils";
+import { useRouter } from "next/router";
 import "./globals.css";
 
 type Email = {
@@ -34,15 +36,32 @@ function EmailBox({ sender, timestamp, subject }: EmailBoxProps) {
   );
 }
 
-function Home({ emails }: HomeProps) {
+const Home = ({ emails }: HomeProps) => {
+  const router = useRouter();
+
+  const handleSummarizeToday = () => {
+    router.push("/summarizeToday");
+  };
+  const handleSummarizeWeek = () => {
+    router.push("/summarizeWeek");
+  };
+
   return (
     <main className="mx-0">
       <div className="inbox-header bg-light-accent outlook-shadow">
         <div className="inbox-name">Inbox</div>
-        <button id="todayBttn" className="summary-buttons">
+        <button
+          id="todayBttn"
+          className="summary-buttons"
+          onClick={handleSummarizeToday}
+        >
           Summarize Today's Emails
         </button>
-        <button id="weekBttn" className="summary-buttons">
+        <button
+          id="weekBttn"
+          className="summary-buttons"
+          onClick={handleSummarizeWeek}
+        >
           Summarize This Week's Emails
         </button>
       </div>
@@ -58,7 +77,7 @@ function Home({ emails }: HomeProps) {
       </div>
     </main>
   );
-}
+};
 
 export const getServerSideProps: GetServerSideProps = async () => {
   let emails = await fetchAllEmails();

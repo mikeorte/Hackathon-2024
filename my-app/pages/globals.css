@@ -1,120 +1,74 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+import { GetServerSideProps } from "next";
+import { fetchAllEmails } from "../lib/dbUtils";
+import "./globals.css";
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 20, 20, 20
-  --background-end-rgb: 20, 20, 20
+type Email = {
+  _id: string;
+  sender: string;
+  recipient: string;
+  timestamp: string;
+  subject: string;
+  body: string;
+  summary?: string;
+};
+
+type EmailBoxProps = {
+  sender: string;
+  timestamp: string;
+  subject: string;
+};
+
+type HomeProps = {
+  emails: Email[];
+};
+
+function EmailBox({ sender, timestamp, subject }: EmailBoxProps) {
+  return (
+    <div className="bg-light-accent-hoverable email-nugget outlook-shadow">
+      <div>{sender}</div>
+      <div className="email-nugget-indent">{subject}</div>
+      <div className="email-nugget-indent text-grey">{new Date(timestamp).toDateString()}</div>
+    </div>
+  );
 }
 
-/*
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}*/
-
-body {
-  color: rgb(255, 255, 255);
-  background-color: rgb(20, 20, 20);
-  padding-left: 1rem;
-  padding-right: 1rem;
-  font-family: "Segoe UI", "Segoe UI Web (West European)", "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+function Home({ emails }: HomeProps) {
+  return (
+    <main className="mx-0">
+      <div className="inbox-header bg-light-accent outlook-shadow">
+        <div className="inbox-name">Inbox</div>
+        <button id="todayBttn" className="summary-buttons">
+          Summarize Today's Emails
+        </button>
+        <button
+          id="weekBttn"
+          className="summary-buttons"
+        >
+          Summarize This Week's Emails
+        </button>
+      </div>
+      <div id="EmailList">
+        {emails.map((email) => (
+          <EmailBox
+            key={email._id}
+            sender={email.sender}
+            timestamp={email.timestamp}
+            subject={email.subject}
+          />
+        ))}
+      </div>
+    </main>
+  );
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-}
+export const getServerSideProps: GetServerSideProps = async () => {
+  let emails = await fetchAllEmails();
+  const serializedEmails = emails.map((email: Email) => {
+    const serializedEmail = { ...email, _id: email._id.toString() };
+    return serializedEmail;
+  });
 
-.outlook-shadow {
-  box-shadow: 0px 2.5px 5px rgba(0, 0, 0, 0.25);
-}
+  return { props: { emails: serializedEmails } };
+};
 
-.bg-background {
-  background-color: rgb(20, 20, 20);
-}
-
-.bg-blue-accent {
-  background-color: rgb(19, 45, 73);
-}
-
-.bg-blue-accent:hover {
-  background-color: rgb(25, 59, 95);
-}
-
-.bg-light-accent {
-  background-color: rgb(41, 41, 41);
-}
-
-.bg-light-accent-hoverable {
-  background-color: rgb(41, 41, 41);
-}
-
-.bg-light-accent-hoverable:hover {
-  background-color: rgb(20, 20, 20);
-}
-
-.text-grey {
-  color: rgb(173, 173, 173);
-}
-
-.summary-buttons:hover {
-  background-color: rgb(25, 29, 34);
-}
-
-/* width */
-::-webkit-scrollbar {
-  width: 6px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  background: rgb(20, 20, 20);
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: rgb(133, 133, 133);
-  border-radius: 3px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: rgb(173, 173, 173);
-}
-
-.date-display {
-  display: inline;
-  border-radius: 0.375rem;
-  padding: 0.5rem;
-  margin-left: 1rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-}
-
-#Header {
-  font-size: 2.25rem/* 36px */;
-  line-height: 2.5rem/* 40px */;
-  font-weight: 600;
-  border-radius: 0.25rem/* 4px */;
-  margin-top: 2rem/* 32px */;
-  margin-bottom: 2rem/* 32px */;
-  margin-left: 2.5rem/* 40px */;
-  margin-right: 2.5rem/* 40px */;
-}
-
-.summary-display {
-  margin: 1rem/* 16px */;
-  padding-left: 2rem/* 32px */;
-  padding-right: 2rem/* 32px */;
-  padding-top: 1rem/* 16px */;
-  padding-bottom: 1rem/* 16px */;
-  border-radius: 0.375rem/* 6px */;
-  font-size: 1.125rem/* 18px */;
-  line-height: 1.75rem/* 28px */;
-}
+export default Home;

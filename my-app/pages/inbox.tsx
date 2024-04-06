@@ -24,10 +24,10 @@ type HomeProps = {
 
 function EmailBox({ sender, timestamp, subject }: EmailBoxProps) {
   return (
-    <div className="bg-light-accent-hoverable px-3 mb-3 py-2 rounded w-80 overflow-clip outlook-shadow">
+    <div className="bg-light-accent-hoverable email-nugget outlook-shadow">
       <div>{sender}</div>
-      <div className="pl-4">{subject}</div>
-      <div className="pl-4 text-grey">{new Date(timestamp).toDateString()}</div>
+      <div className="email-nugget-indent">{subject}</div>
+      <div className="email-nugget-indent text-grey">{new Date(timestamp).toDateString()}</div>
     </div>
   );
 }
@@ -35,14 +35,14 @@ function EmailBox({ sender, timestamp, subject }: EmailBoxProps) {
 function Home({ emails }: HomeProps) {
   return (
     <main className="mx-0">
-      <div className="py-2 my-3 pl-4 bg-light-accent rounded outlook-shadow flex flex-row">
-        <div className="font-bold">Inbox</div>
-        <button id="todayBttn" className="summary-buttons rounded mx-5 px-2">
+      <div className="inbox-header bg-light-accent outlook-shadow">
+        <div className="inbox-name">Inbox</div>
+        <button id="todayBttn" className="summary-buttons">
           Summarize Today's Emails
         </button>
         <button
           id="weekBttn"
-          className="summary-buttons rounded px-2 justify-self-end"
+          className="summary-buttons"
         >
           Summarize This Week's Emails
         </button>
